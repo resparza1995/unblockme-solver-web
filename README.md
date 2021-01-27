@@ -4,7 +4,7 @@ Java, Spring boot, bootstrap.
 Busca solucion a puzzles estilo unblockme utilizando los siguientes algoritmos de busqueda:
 - Busqueda en anchura (BFS)
 - Busqueda en profundidad (DFS)
-- Busqueda A estrella.
+- Busqueda A estrella
 
 ## Formato del fichero puzzle
 
