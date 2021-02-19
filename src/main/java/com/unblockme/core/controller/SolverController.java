@@ -20,6 +20,9 @@ public class SolverController {
 	static Estado einicial = null;
 	static char[][] efinal = null;
 	
+	/*
+	* POST - recibe un json con los bloques del puzzle.
+	*/
 	@PostMapping("/estado")
 	public String setEstado(@RequestBody String json) {
 		String strBloques = gson.fromJson(json, String.class);
@@ -45,6 +48,10 @@ public class SolverController {
 		}
 	}
 	
+	/*
+	* GET - Resuelve el puzzle y encuentra la solucion 
+	*       utilizando el algoritmo BFS y devuelve los pasos.
+	*/
 	@GetMapping("/bfs")
 	public String solveWithBfs() {
 		Banchura ba = new Banchura(einicial);
@@ -55,6 +62,10 @@ public class SolverController {
 		return gson.toJson(result);
 	}
 	
+	/*
+	* GET - Resuelve el puzzle y encuentra la solucion 
+	*       utilizando el algoritmo DFS y devuelve los pasos.
+	*/	
 	@GetMapping("/dfs")
 	public String solveWithDfs() {
 		Bprofundidad bp = new Bprofundidad(einicial);
@@ -64,7 +75,11 @@ public class SolverController {
 		List<Operador> result = Utils.iteratorToList(solucion);
 		return gson.toJson(result);
 	}
-	
+
+	/*
+	* GET - Resuelve el puzzle y encuentra la solucion 
+	*       utilizando el algoritmo A* y devuelve los pasos.
+	*/	
 	@GetMapping("/aestar")
 	public String solveWithAestar() {
 		Baestrella bas = new Baestrella(einicial);
@@ -74,7 +89,11 @@ public class SolverController {
 		List<Operador> result = Utils.iteratorToList(solucion);		
 		return gson.toJson(result);
 	}
-	
+
+	/*
+	* GET - Devuelve el estado final.
+	*       
+	*/	
 	@GetMapping("/estadoFinal")
 	public String getEstadoFinal() {
 		char[] efinal1d = new char[36];
