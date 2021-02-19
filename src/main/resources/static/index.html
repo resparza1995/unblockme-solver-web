@@ -16,7 +16,7 @@
             <span class="navbar-brand mb-0 h1" style="margin-left: 1%;">Unblockme Solver</span>
         </div>
     </nav>
-
+	
     <main style="margin-left: 2%; height: 100%;">
         <div class="row mb-3">
             <input type="file" class="custom-file-input" id="filechooser">
@@ -74,6 +74,12 @@
             </div>
 
             <div class="col-3">
+            	<select id="puzzle-select" class="form-select mb-3" aria-label="puzzle-select">
+            		<option value="-1" selected>Select a demo puzzle</option>
+            		<option value="0">Principiante-01</option>
+            		<option value="1">Iniciado-01</option>
+            		<option value="2">Avanzado-01</option>
+            	</select>
                 <form>
                     <div class="row mb-3">
                         <div class="col">
@@ -101,7 +107,7 @@
                     </div>
                     <div class="row mb-3">
                         <div class="col">
-                            <button type="button" class="btn btn-primary" id="solve-btn">Resolver!</button>
+                            <button type="button" class="btn btn-primary" id="solve-btn">Resolver!</button>                            
                         </div>
                     </div>
                 </form>

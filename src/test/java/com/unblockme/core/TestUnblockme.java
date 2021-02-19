@@ -37,11 +37,11 @@ public class TestUnblockme {
 		return null;
 	}
 
-	//@Test
+	@Test
 	public void busquedaAnchura() {
-		File file = new File("puzzles/unblockme/Principiante-01.puzzle");
+		File file = new File("puzzles/Principiante-01.puzzle");
 		Estado einicial = fileToEstado(file);
-		
+		System.out.println(einicial.toString());
 		Banchura ba = new Banchura(einicial);
 		Iterable<Operador> solucion = ba.solucion();
 		

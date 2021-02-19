@@ -6,11 +6,12 @@ Busca solucion a puzzles estilo unblockme utilizando los siguientes algoritmos d
 - Busqueda en profundidad (DFS)
 - Busqueda A estrella
 
-## Formato del fichero puzzle
+## Cargar un puzzle
+Hay un menu desplegable con puzzles de ejemplo para elegir.
+Para importar un puzzle personalizado ha de tener el siguiente formato:
 
-El fichero a subir tiene que tener el siguiente formato:
-archivo de texto, 6x6. La primera linea es informativa, se refiere al nivel de dificultad de los puzzles de ejemplo
-que hay en la carpeta /puzzles. 
+Archivo de texto con extension .puzzle, 6x6. La primera linea es informativa, se refiere al nivel de dificultad de los puzzles de ejemplo
+que hay en la carpeta /puzzles.
 
 - 8
 - a a - - - b

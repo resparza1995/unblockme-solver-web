@@ -1,5 +1,11 @@
 var fc = document.getElementById("filechooser");
-// Read file as text
+
+/**
+ * Lee un fichero y lo devuelve mediante 
+ * el callback como un string.
+ * @param {*} file 
+ * @param {*} callback 
+ */
 function read(file, callback) {
     var reader = new FileReader();
 
@@ -9,23 +15,40 @@ function read(file, callback) {
 
     reader.readAsText(file);
 }
-// Listener filechooser
+
+// ### LISTENERS ###
+
+/**
+ * FileReader listener
+ * Lee un fichero .puzzle y lo dibuja. 
+ * Hace una peticion POST para guardar el estado del puzzle.
+ */
 fc.addEventListener("change", () => {
     read(fc.files.item(0), (res) => {
-        drawEstado(res);
-        fetch("/estado", {
-                method: 'POST',
-                body: JSON.stringify(res),
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            }).then(res => res.json())
-            .catch(error => console.error('Error:', error))
-            .then(response => console.log('Success:', response));
+        var extension = fc.files.item(0).name.split('.').pop().toLowerCase();
+        if(extension === 'puzzle') {
+            drawEstado(res);
+            fetch("/estado", {
+                    method: 'POST',
+                    body: JSON.stringify(res),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }).then(res => res.json())
+                .catch(error => console.error('Error:', error));
+        }
+        else {
+            alert("The file must have a .puzzle extension.")
+        }
     })
 });
 
-// Listener boton resolver
+/**
+ * Solve button Listener
+ * Revisa que checkbox ha sido seleccionado y hace
+ * una peticion GET para recibir la solucion con el algoritmo
+ * seleccionado.
+ */
 document.getElementById("solve-btn").addEventListener("click", () => {
     // Check box
     var bfscbox = document.getElementById("bfscbox").checked;
@@ -45,11 +68,41 @@ document.getElementById("solve-btn").addEventListener("click", () => {
             .then(response => {
                 getEstadoFinal();
                 printSteps(response)
-                console.log('Success:', response);
             });
     }
 });
 
+/**
+ * Listener Select element
+ * Envia una peticion POST con el identificador del puzzle
+ * de demo para que se cargue en caso de no querer subir un fichero
+ * .puzzle.
+ */
+document.getElementById("puzzle-select").addEventListener("change", () => {
+		
+    let elem = document.getElementById("puzzle-select");
+    let val = elem.value;
+    
+    fetch('/setEstadoById', {
+            method: 'POST',
+            body: JSON.stringify(val),
+            headers: {
+                'Content-type':'application/json'
+            }
+        }).then(res => res.json())
+        .catch(error => console.error('Error:', error))
+        .then(response => {
+            drawEstado(response);
+        });
+
+});
+
+// ### FUNCTIONS ###
+
+/**
+ * Imprime los pasos en formato tabla.
+ * @param {*} solution 
+ */
 function printSteps(solution) {
     var html = "";
     var count = 0;
@@ -68,18 +121,25 @@ function printSteps(solution) {
     alert("Numero de pasos: " + solution.length)
 }
 
-
+/**
+ * GET - Obtiene el estado final del puzzle cargado
+ * actualmente y lo imprime.
+ */
 function getEstadoFinal() {
     fetch("/estadoFinal", {
             method: 'GET'
         }).then(res => res.json())
         .catch(error => console.error('Error:', error))
         .then(response => {
-            console.log('Success:', response);
             drawEstado(response);
         });
 }
 
+/**
+ * Dibuja en el tablero el estado pasado por parametro.
+ * Estado debe ser un array[]: cada bloque un elemento.
+ * @param {*} estado 
+ */
 function drawEstado(estado) {
 
     if (estado != null) {
@@ -95,7 +155,6 @@ function drawEstado(estado) {
         var maxcol = 6;
         let bloque;
 
-        console.log(bloques)
         for (let i = 0; i < 36; i++) {
             bloque = bloques[i];
             maxcol--;
@@ -112,6 +171,11 @@ function drawEstado(estado) {
     }
 }
 
+/**
+ * Elige un color aleatorio para cada tipo de bloque
+ * @param {*} bloques 
+ * @returns {map} Map con los colores para cada bloque.
+ */
 function setColorToBloque(bloques) {
     var colorMap = new Map();
     colorMap.set('-', '#F1F1F1F1')
@@ -126,11 +190,24 @@ function setColorToBloque(bloques) {
     return colorMap;
 }
 
+/**
+ * Genera un numero aleatorio, entre 0 y el
+ * valor pasado por parametro.
+ * @param {*} numero 
+ * @returns {int} entre 0 y param
+ */
 function generarNumero(numero) {
     return (Math.random() * numero).toFixed(0);
 }
 
+/**
+ * Devuelve un color aleatorio con el formato
+ * rgb(r,g,b).
+ * @returns {string} rgb(r,g,b)
+ */
 function colorRGB() {
     var coolor = "(" + generarNumero(255) + "," + generarNumero(255) + "," + generarNumero(255) + ")";
     return "rgb" + coolor;
 }
+
+
