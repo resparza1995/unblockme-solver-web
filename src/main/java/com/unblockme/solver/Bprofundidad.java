@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import com.unblockme.lib.Stack;
 
 /**
- * Clase que hereda de Busqueda para implementar el algoritmo de b�squeda de
+ * Clase que hereda de Busqueda para implementar el algoritmo de busqueda de
  * primero en profundidad.
  */
 public class Bprofundidad extends Busqueda {
@@ -22,7 +22,7 @@ public class Bprofundidad extends Busqueda {
 	}
 
 	/**
-	 * Busca una soluci�n al puzzle utilizando el algoritmo de b�squeda primero en
+	 * Busca una solucion al puzzle utilizando el algoritmo de busqueda primero en
 	 * profundidad.
 	 * 
 	 * @param inicial El estado inicial del tablero
@@ -54,7 +54,7 @@ public class Bprofundidad extends Busqueda {
 			} else
 				break;
 		}
-//   	Una vez completada la b�squeda pasa los valores para las variables
+//   	Una vez completada la busqueda pasa los valores para las variables
 //      resoluble y solucion de la clase Busqueda
 		if (stack.isEmpty()) {
 			resoluble = false;
