@@ -27,8 +27,8 @@ public class Utils {
 	public static char[][] puzzle03 = { { 'a', 'a', 'b', 'c', '-', '-' }, 
 			 					 		{ 'd', '-', 'b', 'c', '-', '-' },
 			 					 		{ 'd', 'X', 'X', 'c', '-', '-' }, 
-			 					 		{ '-', '-', '-', '-', '-', '-' }, 
-			 					 		{ '-', '-', 'd', '-', '-', '-' },
+			 					 		{ 'd', '-', '-', '-', '-', '-' }, 
+			 					 		{ '-', '-', '-', '-', '-', '-' },
 			 					 		{ '-', '-', '-', 'f', 'f', 'f' }, };	
 
 	public static List<Operador> iteratorToList (Iterable<Operador> iter) {
