@@ -38,24 +38,20 @@ public class SolverController {
 	*/
 	@PostMapping("/estado")
 	public String setEstado(@RequestBody String json) {
-
-		String strBloques = gson.fromJson(json, String.class);
 		char[][] bloques = new char[6][6];
-		strBloques = strBloques.substring(1);
-		strBloques = strBloques.replaceAll(" ", "");
-		strBloques = strBloques.replaceAll("\n", "");
-		int index = 0;
+		String strBloques = json.replaceAll("[^a-zA-Z-]", "");
 
 		try {
+			int index = 0;
 			for(int i =0; i<6;i++) {
-				for (int j=0; j<6; j++) {
+				for (int j = 0; j < 6; j++) {
 					bloques[i][j] = strBloques.charAt(index);
-					index++;	
+					index++;
 				}
 			}
-			einicial = new Estado (bloques);
-			return gson.toJson(bloques);
-			
+			einicial = new Estado(bloques);
+			return gson.toJson(Utils.bloques2dTo1d(bloques));
+
 		}catch(Exception e) {
 			String err = gson.toJson("No se puede leer el puzzle.");
 			return err;

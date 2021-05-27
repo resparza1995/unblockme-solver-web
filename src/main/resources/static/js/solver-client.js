@@ -1,4 +1,5 @@
 var fc = document.getElementById("filechooser");
+var colors;
 
 /**
  * Lee un fichero y lo devuelve mediante 
@@ -27,15 +28,15 @@ fc.addEventListener("change", () => {
     read(fc.files.item(0), (res) => {
         var extension = fc.files.item(0).name.split('.').pop().toLowerCase();
         if(extension === 'puzzle') {
-            drawEstado(res);
             fetch("/estado", {
                     method: 'POST',
-                    body: JSON.stringify(res),
+                    body: res,
                     headers: {
                         'Content-Type': 'application/json'
                     }
                 }).then(res => res.json())
-                .catch(error => console.error('Error:', error));
+                .catch(error => console.error('Error:', error))
+                .then(estado => drawEstado(estado, "readfile"));
         }
         else {
             alert("The file must have a .puzzle extension.")
@@ -67,7 +68,7 @@ document.getElementById("solve-btn").addEventListener("click", () => {
             .catch(error => console.error('Error:', error))
             .then(response => {
                 getEstadoFinal();
-                printSteps(response)
+                printSteps(response);
             });
     }
 });
@@ -92,7 +93,7 @@ document.getElementById("puzzle-select").addEventListener("change", () => {
         }).then(res => res.json())
         .catch(error => console.error('Error:', error))
         .then(response => {
-            drawEstado(response);
+            drawEstado(response, "select");
         });
 
 });
@@ -131,7 +132,7 @@ function getEstadoFinal() {
         }).then(res => res.json())
         .catch(error => console.error('Error:', error))
         .then(response => {
-            drawEstado(response);
+            drawEstado(response, "call");
         });
 }
 
@@ -140,18 +141,18 @@ function getEstadoFinal() {
  * Estado debe ser un array[]: cada bloque un elemento.
  * @param {*} estado 
  */
-function drawEstado(estado) {
+function drawEstado(estado, event) {
 
     if (estado != null) {
         var bloques = estado;
-        if (typeof(estado) === "string") { // cuando lee el fichero con el tablero.
-            estado = estado.substring(2); // primer caracter es el nivel de dificultad y el segundo es un salto de linea.
-            estado = estado.replaceAll("\n", " ");
-            bloques = estado.split(" ");
-        }
+
         var html = "";
         let rowindex = 1;
-        var colors = setColorToBloque(bloques);
+
+        if (event === "select" || event === "readfile"){
+            colors = setColorToBloque(bloques);
+        }
+
         var maxcol = 6;
         let bloque;
 
