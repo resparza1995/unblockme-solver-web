@@ -1,6 +1,5 @@
 # unblockme-solver-web
 Java, Spring boot, bootstrap.  
-[Deployed in heroku](https://unblockme-solver-web.herokuapp.com/)
 
 Busca solucion a puzzles estilo unblockme utilizando los siguientes algoritmos de busqueda:
 - Busqueda en anchura (BFS)
